@@ -21,7 +21,6 @@ public class Client {
 
     /**
      * Envoie la commande serializé au serveur via les sockets
-     *
      **/
     public void sendCommand(Command command) {
 
@@ -94,6 +93,9 @@ public class Client {
         sendCommand(command);
     }
 
+    /**
+     * Point d'entré du client
+     */
     public static void main(String[] args) {
         Scanner reader = new Scanner(System.in);
         System.out.println("Port number: ");
