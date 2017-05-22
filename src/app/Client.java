@@ -20,7 +20,7 @@ public class Client {
     }
 
     /**
-     * Execute la commande via les sockets
+     * Envoie la commande serializé au serveur via les sockets
      *
      **/
     public void sendCommand(Command command) {
@@ -51,9 +51,17 @@ public class Client {
         initCommand();
     }
 
+    /**
+     * Initialise une commande à envoyer
+     **/
     public void initCommand() {
         Command command = new Command();
         command.setClassName("app.Calc");
+
+        ArrayList<String> list = new ArrayList<String>();
+        System.out.println("First number: ");
+        int firstNumber = reader.nextInt();
+        list.add(Integer.toString(firstNumber));
 
         System.out.println("Choose from these choices");
         System.out.println("-------------------------");
@@ -78,10 +86,6 @@ public class Client {
                 break;
         }
 
-        ArrayList<String> list = new ArrayList<String>();
-        System.out.println("First number: ");
-        int firstNumber = reader.nextInt();
-        list.add(Integer.toString(firstNumber));
         System.out.println("Second number: ");
         int secondNumber = reader.nextInt();
         list.add(Integer.toString(secondNumber));
