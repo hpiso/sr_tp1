@@ -11,7 +11,6 @@ import java.util.Scanner;
 
 public class Client {
 
-    private List<Integer> list = new ArrayList<Integer>();
     private int port;
 
     public Client(int port) {
@@ -22,14 +21,15 @@ public class Client {
      * Execute la commande via les sockets
      *
      **/
-    public void executeCommand() {
+    public void sendCommand() {
 
         Command command = new Command();
-        command.setClassName("Calc");
-        command.setFunctionName("add");
-        this.list.add(2);
-        this.list.add(3);
-        command.setParams(this.list);
+        command.setClassName("app.Calc");
+        command.setMethodName("substraction");
+        ArrayList<String> list = new ArrayList<String>();
+        list.add("10");
+        list.add("2");
+        command.setParams(list);
 
         try {
 
@@ -59,7 +59,16 @@ public class Client {
         System.out.println("Port number: ");
         int port = reader.nextInt();
 
+        System.out.println("Choose from these choices");
+        System.out.println("-------------------------");
+        System.out.println("1 - Addition");
+        System.out.println("2 - Multiply");
+        System.out.println("3 - Substraction");
+        System.out.println("4 - Divide");
+        int selection = reader.nextInt();
+
+
         Client client = new Client(port);
-        client.executeCommand();
+        client.sendCommand();
     }
 }

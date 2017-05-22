@@ -1,6 +1,7 @@
 package app;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -9,8 +10,8 @@ import java.util.List;
 public class Command implements Serializable {
 
     private String className;
-    private String functionName;
-    private List<Integer> params;
+    private String methodName;
+    private ArrayList<String> params;
 
     public String getClassName() {
         return className;
@@ -20,19 +21,19 @@ public class Command implements Serializable {
         this.className = className;
     }
 
-    public String getFunctionName() {
-        return functionName;
+    public String getMethodName() {
+        return methodName;
     }
 
-    public void setFunctionName(String functionName) {
-        this.functionName = functionName;
+    public void setMethodName(String methodName) {
+        this.methodName = methodName;
     }
 
-    public List<Integer> getParams() {
+    public ArrayList<String> getParams() {
         return params;
     }
 
-    public void setParams(List<Integer> params) {
+    public void setParams(ArrayList<String> params) {
         this.params = params;
     }
 }
