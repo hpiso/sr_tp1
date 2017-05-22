@@ -12,24 +12,18 @@ import java.util.Scanner;
 public class Client {
 
     private int port;
+    private Scanner reader;
 
     public Client(int port) {
         this.port = port;
+        this.reader = new Scanner(System.in);
     }
 
     /**
      * Execute la commande via les sockets
      *
      **/
-    public void sendCommand() {
-
-        Command command = new Command();
-        command.setClassName("app.Calc");
-        command.setMethodName("substraction");
-        ArrayList<String> list = new ArrayList<String>();
-        list.add("10");
-        list.add("2");
-        command.setParams(list);
+    public void sendCommand(Command command) {
 
         try {
 
@@ -44,7 +38,9 @@ public class Client {
             ObjectInputStream inFromServer = new ObjectInputStream(socket.getInputStream());
             String response = inFromServer.readUTF();
 
-            System.out.println("From server : " + response);
+            System.out.println("\n***************************");
+            System.out.println("Result from server : " + response);
+            System.out.println("***************************\n");
 
             //close socket
             socket.close();
@@ -52,12 +48,12 @@ public class Client {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        initCommand();
     }
 
-    public static void main(String[] args) {
-        Scanner reader = new Scanner(System.in);
-        System.out.println("Port number: ");
-        int port = reader.nextInt();
+    public void initCommand() {
+        Command command = new Command();
+        command.setClassName("app.Calc");
 
         System.out.println("Choose from these choices");
         System.out.println("-------------------------");
@@ -65,10 +61,40 @@ public class Client {
         System.out.println("2 - Multiply");
         System.out.println("3 - Substraction");
         System.out.println("4 - Divide");
-        int selection = reader.nextInt();
+        int calcType = reader.nextInt();
 
+        switch (calcType) {
+            case 1:
+                command.setMethodName("add");
+                break;
+            case 2:
+                command.setMethodName("multiply");
+                break;
+            case 3:
+                command.setMethodName("substraction");
+                break;
+            case 4:
+                command.setMethodName("divide");
+                break;
+        }
 
+        ArrayList<String> list = new ArrayList<String>();
+        System.out.println("First number: ");
+        int firstNumber = reader.nextInt();
+        list.add(Integer.toString(firstNumber));
+        System.out.println("Second number: ");
+        int secondNumber = reader.nextInt();
+        list.add(Integer.toString(secondNumber));
+        command.setParams(list);
+
+        sendCommand(command);
+    }
+
+    public static void main(String[] args) {
+        Scanner reader = new Scanner(System.in);
+        System.out.println("Port number: ");
+        int port = reader.nextInt();
         Client client = new Client(port);
-        client.sendCommand();
+        client.initCommand();
     }
 }
